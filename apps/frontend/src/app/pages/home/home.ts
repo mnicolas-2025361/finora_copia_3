@@ -2,6 +2,7 @@ import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+
 import { IngresoService, Ingreso } from '../../services/ingreso.service.js';
 
 interface ResumenHome {

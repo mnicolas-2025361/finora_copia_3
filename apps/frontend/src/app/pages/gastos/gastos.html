@@ -1,0 +1,82 @@
+<div class="gastos-page">
+
+  <div class="encabezado">
+    <div>
+      <h1>Gastos</h1>
+      <p>Administra y consulta tus gastos</p>
+    </div>
+
+    <button class="btn-agregar" (click)="abrirModal()">
+      + Agregar gasto
+    </button>
+
+  </div>
+
+  <div class="resumen">
+
+    <div class="tarjeta">
+      <span>Total de gastos</span>
+      <h2>Q{{ totalGastos | number:'1.2-2' }}</h2>
+    </div>
+
+    <div class="tarjeta">
+      <span>Gastos de este mes</span>
+      <h2>Q{{ gastoMes | number:'1.2-2' }}</h2>
+    </div>
+
+    <div class="tarjeta">
+      <span>Cantidad de gastos</span>
+      <h2>{{ gastos.length }}</h2>
+    </div>
+
+  </div>
+
+  <div class="contenido">
+
+    <div class="titulo-lista">
+      <h2>Lista de gastos</h2>
+    </div>
+
+    <div *ngIf="cargando" class="mensaje">
+      Cargando gastos...
+    </div>
+
+    <div *ngIf="error" class="error">
+      {{ error }}
+    </div>
+
+    <div *ngIf="!cargando && !error && gastos.length === 0" class="mensaje">
+      No tienes gastos registrados.
+    </div>
+
+    <div class="lista" *ngIf="!cargando && gastos.length > 0">
+
+      <div class="gasto" *ngFor="let gasto of gastos">
+
+        <div class="info">
+          <h3>{{ gasto.descripcion }}</h3>
+          <p>{{ gasto.fecha | date:'dd/MM/yyyy' }}</p>
+        </div>
+
+        <div class="monto-gasto">
+          - Q{{ gasto.monto | number:'1.2-2' }}
+        </div>
+
+        <button
+          class="btn-eliminar"
+          (click)="eliminarGasto(gasto.id)">
+          Eliminar
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+<app-nuevo-gasto
+  *ngIf="mostrarModal"
+  (cerrar)="cerrarModal()"
+  (guardadoExitoso)="gastoGuardado($event)">
+</app-nuevo-gasto>
+
+</div>
