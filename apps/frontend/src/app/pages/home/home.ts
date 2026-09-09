@@ -1,6 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router'; // 1. Importa el Router
+import { Router } from '@angular/router';
 import { IngresoService, Ingreso } from '../../services/ingreso.service.js';
 
 @Component({
@@ -12,7 +12,8 @@ import { IngresoService, Ingreso } from '../../services/ingreso.service.js';
 })
 export class HomeComponent implements OnInit {
   private ingresoService = inject(IngresoService);
-  private router = inject(Router); // 2. Inyecta el Router
+  private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   ingresos: Ingreso[] = [];
   ingresoMes = 0;
@@ -24,15 +25,18 @@ export class HomeComponent implements OnInit {
 
   cargarDatosDashboard(): void {
     this.cargando = true;
+
     this.ingresoService.listar().subscribe({
       next: (data) => {
         this.ingresos = data;
         this.calcularIngresoMes();
         this.cargando = false;
+        this.cdr.detectChanges(); // fuerza el refresco de la vista
       },
       error: (err) => {
         console.error('Error al cargar ingresos en el dashboard:', err);
         this.cargando = false;
+        this.cdr.detectChanges();
       }
     });
   }
@@ -50,7 +54,6 @@ export class HomeComponent implements OnInit {
       .reduce((total, ingreso) => total + Number(ingreso.monto), 0);
   }
 
-  // 3. Método que le da vida al botón del HTML para ir a la vista de ingresos
   irANuevoIngreso(): void {
     this.router.navigate(['/ingresos']);
   }

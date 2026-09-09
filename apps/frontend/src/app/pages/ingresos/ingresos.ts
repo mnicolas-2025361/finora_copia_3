@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ingresoComponent } from './nuevo-ingreso';
@@ -15,8 +15,8 @@ export class IngresosComponent implements OnInit {
 
   private ingresoService = inject(IngresoService);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
-  // Arranca vacio: la lista SIEMPRE viene de la base de datos.
   ingresos: Ingreso[] = [];
 
   mostrarModal = false;
@@ -26,7 +26,6 @@ export class IngresosComponent implements OnInit {
   totalIngresos = 0;
   ingresoMes = 0;
 
-  // La carga se hace en ngOnInit, no en el constructor.
   ngOnInit(): void {
     this.cargarIngresos();
   }
@@ -40,11 +39,13 @@ export class IngresosComponent implements OnInit {
         this.ingresos = data;
         this.calcularTotales();
         this.cargando = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.error = this.mensajeError(err, 'No se pudo cargar la lista de ingresos');
         this.cargando = false;
         console.error('Error al cargar los ingresos:', err);
+        this.cdr.detectChanges();
       }
     });
   }
@@ -75,12 +76,11 @@ export class IngresosComponent implements OnInit {
     this.mostrarModal = false;
   }
 
-  // Se dispara desde (guardadoExitoso) del modal.
-  // Recibe el ingreso ya creado y lo agrega sin volver a pedir toda la lista.
   ingresoGuardado(nuevo: Ingreso): void {
     this.ingresos = [nuevo, ...this.ingresos];
     this.calcularTotales();
     this.cerrarModal();
+    this.cdr.detectChanges();
   }
 
   eliminarIngreso(id: number): void {
@@ -92,10 +92,12 @@ export class IngresosComponent implements OnInit {
       next: () => {
         this.ingresos = this.ingresos.filter((i) => i.id !== id);
         this.calcularTotales();
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.error = this.mensajeError(err, 'No se pudo eliminar el ingreso');
         console.error('Error al eliminar:', err);
+        this.cdr.detectChanges();
       }
     });
   }
