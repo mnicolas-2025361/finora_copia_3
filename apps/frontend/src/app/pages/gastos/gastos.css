@@ -6,6 +6,19 @@ color: white;
 box-sizing: border-box;
 }
 
+.btn-volver {
+  display: block;
+  color: #8fa39a;
+  text-decoration: none;
+  font-size: 13px;
+  margin-bottom: 10px;
+  transition: color 0.2s;
+}
+
+.btn-volver:hover {
+  color: #4fd1a1;
+}
+
 .encabezado {
 display: flex;
 justify-content: space-between;

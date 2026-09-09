@@ -1,13 +1,14 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { ingresoComponent } from './nuevo-ingreso';
 import { IngresoService, Ingreso } from '../../services/ingreso.service.js';
 
 @Component({
   selector: 'app-ingresos',
   standalone: true,
-  imports: [CommonModule, ingresoComponent],
+  imports: [CommonModule, ingresoComponent, RouterLink],
   templateUrl: './ingresos.html',
   styleUrl: './ingresos.css'
 })

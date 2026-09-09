@@ -1,13 +1,14 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { GastoComponent } from './nuevo-gasto';
 import { GastoService, Gasto } from '../../services/gasto.service.js';
 
 @Component({
   selector: 'app-gastos',
   standalone: true,
-  imports: [CommonModule, GastoComponent],
+  imports: [CommonModule, GastoComponent, RouterLink],
   templateUrl: './gastos.html',
   styleUrl: './gastos.css'
 })

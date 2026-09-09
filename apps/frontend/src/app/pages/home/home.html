@@ -42,24 +42,16 @@
     </div>
 
     <div class="resumenes">
-      <!-- Lista de Gastos -->
+      <!-- Lista de Gastos (Dinámica desde la Base de Datos) -->
       <div class="card-lista">
         <h2>Gastos Recientes</h2>
-        <div class="lista-item">
-          <span>Comida</span>
-          <span>Q 85.00</span>
-        </div>
-        <div class="lista-item">
-          <span>Transporte</span>
-          <span>Q 45.00</span>
-        </div>
-        <div class="lista-item">
-          <span>Compras</span>
-          <span>Q 320.00</span>
-        </div>
-        <div class="lista-item">
-          <span>Servicios</span>
-          <span>Q 450.00</span>
+
+        <p *ngIf="cargandoGastos" style="color: #888; font-size: 14px; padding: 10px;">Cargando gastos...</p>
+        <p *ngIf="!cargandoGastos && gastos.length === 0" style="color: #888; font-size: 14px; padding: 10px;">No hay gastos registrados.</p>
+
+        <div *ngFor="let item of gastosRecientes" class="lista-item">
+          <span>{{ item.descripcion }}</span>
+          <span style="color: #f87171;">Q {{ item.monto | number:'1.2-2' }}</span>
         </div>
       </div>
 
@@ -80,9 +72,9 @@
       <div class="grafica-container">
         <h2>Presupuesto: Este Mes</h2>
         <div class="grafica">
-          <canvas id="presupuestoChart"></canvas>
+          <div class="dona" [style.background]="estiloDona"></div>
           <div class="grafica-centro">
-            <span class="monto">Q 2,183.87</span><br>utilizados
+            <span class="monto">Q {{ gastosMes | number:'1.2-2' }}</span><br>utilizados
           </div>
         </div>
         <div class="leyenda">
@@ -94,7 +86,8 @@
 
     <div class="botones">
       <button class="boton-accion" (click)="irANuevoGasto()">
-        + Nuevo Gasto</button>
+        + Nuevo Gasto
+      </button>
       <button class="boton-accion" (click)="irANuevoIngreso()">
         + Nuevo Ingreso
       </button>
