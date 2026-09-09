@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { pool } from "../config/database.js";
 import type { UserRole } from "../models/user.model.js";
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "1m";
 
 const JWT_SECRET: string = process.env.JWT_SECRET ?? "";
 
@@ -76,7 +77,7 @@ export async function registerUser(data: RegisterData) {
         },
         JWT_SECRET,
         {
-        expiresIn: "1d"
+        expiresIn: JWT_EXPIRES_IN as any
         }
     );
     

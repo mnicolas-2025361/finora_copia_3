@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { pool } from "../config/database.js";
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "1m";
 const JWT_SECRET = process.env.JWT_SECRET ?? "";
 if (!JWT_SECRET) {
     throw new Error("JWT_SECRET no está configurado en el archivo .env");
@@ -33,7 +34,7 @@ export async function loginUser(data) {
         userId: user.id,
         role
     }, JWT_SECRET, {
-        expiresIn: "1d"
+        expiresIn: JWT_EXPIRES_IN
     });
     return {
         token,
