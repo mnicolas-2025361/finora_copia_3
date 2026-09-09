@@ -27,7 +27,7 @@
     <div class="resumen">
       <div class="card"> 
         <div class="card-title">SALDO DISPONIBLE</div>
-        <div class="card-amount">Q. </div>
+        <div class="card-amount">Q. {{ saldoDisponible | number:'1.2-2' }}</div>
       </div>
       <div class="card"> 
         <div class="tarjeta-metrica">
@@ -37,7 +37,7 @@
       </div>
       <div class="card"> 
         <div class="card-title">GASTOS DE ESTE MES</div>
-        <div class="card-amount">Q. </div>
+        <div class="card-amount">Q. {{ gastosMes | number:'1.2-2' }}</div>
       </div>
     </div>
 
@@ -67,11 +67,9 @@
       <div class="card-lista">
         <h2>Ingresos Realizados</h2>
         
-        <!-- Mensajes de estado -->
         <p *ngIf="cargando" style="color: #888; font-size: 14px; padding: 10px;">Cargando ingresos...</p>
         <p *ngIf="!cargando && ingresos.length === 0" style="color: #888; font-size: 14px; padding: 10px;">No hay ingresos registrados.</p>
 
-        <!-- Bucle dinámico para mostrar los ingresos reales -->
         <div *ngFor="let item of ingresos" class="lista-item">
           <span>{{ item.descripcion }}</span>
           <span style="color: #4ade80;">Q. {{ item.monto | number:'1.2-2' }}</span>
@@ -82,9 +80,7 @@
       <div class="grafica-container">
         <h2>Presupuesto: Este Mes</h2>
         <div class="grafica">
-          <!-- Canvas para Chart.js -->
           <canvas id="presupuestoChart"></canvas>
-          <!-- Texto central simulado para el CSS -->
           <div class="grafica-centro">
             <span class="monto">Q 2,183.87</span><br>utilizados
           </div>
@@ -98,12 +94,9 @@
 
     <div class="botones">
       <button class="boton-accion">+ Nuevo Gasto</button>
-      
-      <!-- Usamos la función irANuevoIngreso() que ya definiste en tu home.ts -->
       <button class="boton-accion" (click)="irANuevoIngreso()">
         + Nuevo Ingreso
       </button>
-
       <button class="boton-accion">+ Realizar Reporte</button>
     </div>
   </div>
