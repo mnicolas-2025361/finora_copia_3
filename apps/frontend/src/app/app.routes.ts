@@ -5,7 +5,9 @@ import { Register } from './pages/register/register';
 import { HomeComponent } from './pages/home/home';
 import { IngresosComponent } from './pages/ingresos/ingresos';
 import { GastosComponent } from './pages/gastos/gastos';
-  
+
+import { authGuard } from './guards/auth.guard';
+
 export const routes: Routes = [
 
   {
@@ -24,19 +26,22 @@ export const routes: Routes = [
     component: Register
   },
 
-
-  { path: '', component: HomeComponent },
-  { path: 'home', component: HomeComponent },
-
+  {
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [authGuard]
+  },
 
   {
     path: 'ingresos',
-    component: IngresosComponent
+    component: IngresosComponent,
+    canActivate: [authGuard]
   },
 
   {
     path: 'gastos',
-    component: GastosComponent
+    component: GastosComponent,
+    canActivate: [authGuard]
   }
 
 ];
