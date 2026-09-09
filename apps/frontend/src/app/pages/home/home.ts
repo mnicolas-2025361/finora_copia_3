@@ -1,3 +1,4 @@
+import { RouterLink } from '@angular/router';
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -14,7 +15,7 @@ interface ResumenHome {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+    imports: [CommonModule, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
@@ -85,5 +86,9 @@ export class HomeComponent implements OnInit {
 
   irANuevoIngreso(): void {
     this.router.navigate(['/ingresos']);
+  }
+
+    irANuevoGasto(): void {
+    this.router.navigate(['/gastos']);
   }
 }
