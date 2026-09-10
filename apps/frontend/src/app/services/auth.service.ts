@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
+
+import { decodeJwtPayload, isJwtExpired } from '../shared/jwt-helper';
 
 interface LoginResponse {
   token: string;
@@ -21,6 +23,14 @@ export class AuthService {
   private apiUrl = 'http://localhost:3000/api/auth';
 
   private expirationTimer: ReturnType<typeof setTimeout> | null = null;
+
+  // Estado observable de la sesión. app.ts se suscribe a esto para
+  // arrancar/detener el InactivityService automáticamente.
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(
+    this.hasValidToken()
+  );
+
+  readonly isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -55,9 +65,23 @@ export class AuthService {
         );
 
         this.startExpirationTimer(response.token);
+
+        // Notifica a toda la app que ahora hay sesión activa
+        this.isAuthenticatedSubject.next(true);
       })
 
     );
+  }
+
+  /** true si hay un token guardado y todavía no expiró */
+  hasValidToken(): boolean {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      return false;
+    }
+
+    return !isJwtExpired(token);
   }
 
   private startExpirationTimer(token: string): void {
@@ -67,7 +91,7 @@ export class AuthService {
       this.expirationTimer = null;
     }
 
-    const payload = this.decodeToken(token);
+    const payload = decodeJwtPayload(token);
 
     if (!payload || !payload.exp) {
       return;
@@ -97,25 +121,6 @@ export class AuthService {
     }
   }
 
-  private decodeToken(token: string): any {
-
-    try {
-
-      const payload = token.split('.')[1];
-
-      return JSON.parse(
-        atob(
-          payload
-            .replace(/-/g, '+')
-            .replace(/_/g, '/')
-        )
-      );
-
-    } catch {
-      return null;
-    }
-  }
-
   logout(expired: boolean = false): void {
 
     if (this.expirationTimer) {
@@ -132,6 +137,10 @@ export class AuthService {
         'true'
       );
     }
+
+    // Notifica a toda la app que la sesión terminó
+    // (esto es lo que hace que InactivityService se detenga)
+    this.isAuthenticatedSubject.next(false);
 
     this.router.navigate(['/login']);
   }

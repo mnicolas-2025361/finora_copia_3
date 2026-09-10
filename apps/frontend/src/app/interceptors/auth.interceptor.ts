@@ -1,11 +1,12 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
+
+import { AuthService } from '../services/auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
-  const router = inject(Router);
+  const authService = inject(AuthService);
 
   const token = localStorage.getItem('token');
 
@@ -16,7 +17,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         Authorization: `Bearer ${token}`
       }
     });
-    
+
   }
 
   return next(req).pipe(
@@ -24,16 +25,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((error) => {
 
       if (error.status === 401) {
-
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-
-        localStorage.setItem(
-          'sessionExpired',
-          'true'
-        );
-
-        router.navigate(['/login']);
+        // Delegamos TODO el logout a AuthService: así se limpia el
+        // timer de expiración, se actualiza isAuthenticated$ y por
+        // lo tanto se detiene el InactivityService automáticamente.
+        authService.logout(true);
       }
 
       return throwError(() => error);

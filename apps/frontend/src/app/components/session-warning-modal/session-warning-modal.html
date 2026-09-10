@@ -1,0 +1,27 @@
+@if (inactivityService.showWarning()) {
+  <div class="session-warning-overlay">
+    <div class="session-warning-box">
+      <div class="session-warning-icon">⏱</div>
+
+      <h2>Tu sesión está por expirar</h2>
+
+      <p>
+        Por seguridad, cerraremos tu sesión por inactividad en
+      </p>
+
+      <div class="session-warning-countdown">
+        {{ inactivityService.remainingSeconds() }}
+        <span>seg</span>
+      </div>
+
+      <div class="session-warning-actions">
+        <button type="button" class="btn-secondary" (click)="onLogoutNow()">
+          Cerrar sesión ahora
+        </button>
+        <button type="button" class="btn-primary" (click)="onStayConnected()">
+          Seguir conectado
+        </button>
+      </div>
+    </div>
+  </div>
+}
