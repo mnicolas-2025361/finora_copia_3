@@ -2,36 +2,29 @@ import { pool } from '../config/database.js';
 export const obtenerResumenHome = async (req, res) => {
     try {
         const usuarioId = req.user.userId;
-        // Primer y último día del mes en curso
         const ahora = new Date();
-        const inicioMes = new Date(ahora.getFullYear(), ahora.getMonth(), 1)
-            .toISOString().split('T')[0];
-        const finMes = new Date(ahora.getFullYear(), ahora.getMonth() + 1, 0)
-            .toISOString().split('T')[0];
-        // COALESCE evita null cuando todavía no hay registros
-        const ingresosMesQuery = pool.query(`SELECT COALESCE(SUM(monto), 0) AS total
-       FROM ingresos
-       WHERE usuario_id = $1 AND fecha BETWEEN $2 AND $3`, [usuarioId, inicioMes, finMes]);
-        const gastosMesQuery = pool.query(`SELECT COALESCE(SUM(monto), 0) AS total
-       FROM gastos
-       WHERE usuario_id = $1 AND fecha BETWEEN $2 AND $3`, [usuarioId, inicioMes, finMes]);
-        // Las dos consultas corren en paralelo
-        const [ingresosMes, gastosMes] = await Promise.all([
-            ingresosMesQuery,
-            gastosMesQuery
-        ]);
-        const totalIngresos = Number(ingresosMes.rows[0].total);
-        const totalGastos = Number(gastosMes.rows[0].total);
-        res.json({
-            presupuesto: totalIngresos,
-            gastado: totalGastos,
-            saldoDisponible: totalIngresos - totalGastos,
-            mes: `${ahora.getFullYear()}-${String(ahora.getMonth() + 1).padStart(2, '0')}`
-        });
+        // Gastos de este mes (para la tarjeta "GASTOS DE ESTE MES")
+        const gastosMesResult = await pool.query(`SELECT COALESCE(SUM(monto), 0) AS total FROM gastos
+       WHERE usuario_id = $1
+         AND EXTRACT(MONTH FROM fecha) = $2
+         AND EXTRACT(YEAR FROM fecha) = $3`, [usuarioId, ahora.getMonth() + 1, ahora.getFullYear()]);
+        const gastadoMes = Number(gastosMesResult.rows[0].total);
+        // Saldo disponible = todos los ingresos historicos - todos los gastos historicos
+        const ingresosResult = await pool.query('SELECT COALESCE(SUM(monto), 0) AS total FROM ingresos WHERE usuario_id = $1', [usuarioId]);
+        const totalIngresos = Number(ingresosResult.rows[0].total);
+        const gastosResult = await pool.query('SELECT COALESCE(SUM(monto), 0) AS total FROM gastos WHERE usuario_id = $1', [usuarioId]);
+        const totalGastos = Number(gastosResult.rows[0].total);
+        const saldoDisponible = totalIngresos - totalGastos;
+        const resumenFinanciero = {
+            presupuesto: 8500.00,
+            gastado: gastadoMes,
+            saldoDisponible
+        };
+        res.json(resumenFinanciero);
     }
     catch (error) {
-        console.error('Error al obtener el resumen del home:', error);
-        res.status(500).json({ mensaje: 'Error al obtener el resumen financiero' });
+        console.error('Error al calcular el resumen del home:', error);
+        res.status(500).json({ mensaje: 'Error al calcular el resumen financiero' });
     }
 };
 //# sourceMappingURL=home.controller.js.map

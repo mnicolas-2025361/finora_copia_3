@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "create:ingresos": "node dist/config/createIngresosTable.js",
+    "create:gastos": "node dist/config/createGastosTable.js"
   },
   "keywords": [],
   "author": "",
