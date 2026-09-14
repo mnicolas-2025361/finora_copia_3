@@ -4,7 +4,11 @@ import { Login } from './pages/login/login';
 import { Register } from './pages/register/register';
 import { HomeComponent } from './pages/home/home';
 import { IngresosComponent } from './pages/ingresos/ingresos';
-  
+import { GastosComponent } from './pages/gastos/gastos';
+import { Reportes } from './pages/reportes/reportes';
+
+import { authGuard } from './guards/auth.guard';
+
 export const routes: Routes = [
 
   {
@@ -23,14 +27,28 @@ export const routes: Routes = [
     component: Register
   },
 
-
-  { path: '', component: HomeComponent },
-  { path: 'home', component: HomeComponent },
-
+  {
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [authGuard]
+  },
 
   {
     path: 'ingresos',
-    component: IngresosComponent
+    component: IngresosComponent,
+    canActivate: [authGuard]
+  },
+
+  {
+    path: 'gastos',
+    component: GastosComponent,
+    canActivate: [authGuard]
+  },
+
+  {
+    path: 'reportes',
+    component: Reportes,
+    canActivate: [authGuard]
   }
 
 ];

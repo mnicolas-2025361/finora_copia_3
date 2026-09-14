@@ -1,0 +1,113 @@
+<div class="home">
+  <div class="contenido">
+    <h1 class="saludo">
+      <span class="texto-blanco">REPORTE DE</span>
+      <br>
+      <span class="texto-verde">INGRESOS VS GASTOS</span>
+    </h1>
+
+    <div class="botones" style="margin-bottom: 20px;">
+      <button class="boton-accion" routerLink="/home">
+        ← Regresar al Dashboard
+      </button>
+    </div>
+
+    <!-- Gráfica principal + listas al lado -->
+    <div class="resumenes-reporte">
+
+      <div class="grafica-container-reporte">
+        <h2>Comparativo mensual</h2>
+
+        <p *ngIf="cargando()" style="color: #888; font-size: 14px; padding: 10px;">
+          Cargando datos...
+        </p>
+
+        <p *ngIf="huboError()" style="color: #f87171; font-size: 14px; padding: 10px;">
+          No se pudieron cargar los datos del reporte.
+        </p>
+
+        <p *ngIf="!cargando() && !huboError() && datosGrafica().length === 0"
+           style="color: #888; font-size: 14px; padding: 10px;">
+          No hay movimientos registrados todavía.
+        </p>
+
+        <ngx-charts-bar-vertical-2d
+          *ngIf="!cargando() && !huboError() && datosGrafica().length > 0"
+          [view]="view"
+          [results]="datosGrafica()"
+          [scheme]="colorScheme"
+          [xAxis]="true"
+          [yAxis]="true"
+          [legend]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          xAxisLabel="Mes"
+          yAxisLabel="Quetzales (Q)"
+          [groupPadding]="16">
+        </ngx-charts-bar-vertical-2d>
+      </div>
+
+      <div class="card-lista">
+        <h2>Ingresos Realizados</h2>
+
+        <p *ngIf="cargando()" style="color: #888; font-size: 14px; padding: 10px;">
+          Cargando...
+        </p>
+
+        <p *ngIf="!cargando() && listaIngresos().length === 0"
+           style="color: #888; font-size: 14px; padding: 10px;">
+          No hay ingresos registrados.
+        </p>
+
+        <div *ngFor="let item of listaIngresos()" class="lista-item">
+          <span>{{ item.descripcion }}</span>
+          <span style="color: #4ade80;">Q. {{ item.monto | number:'1.2-2' }}</span>
+        </div>
+      </div>
+
+      <div class="card-lista">
+        <h2>Gastos Recientes</h2>
+
+        <p *ngIf="cargando()" style="color: #888; font-size: 14px; padding: 10px;">
+          Cargando...
+        </p>
+
+        <p *ngIf="!cargando() && listaGastos().length === 0"
+           style="color: #888; font-size: 14px; padding: 10px;">
+          No hay gastos registrados.
+        </p>
+
+        <div *ngFor="let item of listaGastos()" class="lista-item">
+          <span>{{ item.descripcion }}</span>
+          <span style="color: #f87171;">Q {{ item.monto | number:'1.2-2' }}</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Tendencia histórica -->
+    <div class="grafica-container-reporte" style="margin-top: 24px;">
+      <h2>Tendencia histórica</h2>
+
+      <ngx-charts-line-chart
+        *ngIf="!cargando() && !huboError() && datosGrafica().length > 1"
+        [view]="view"
+        [results]="datosTendencia()"
+        [scheme]="colorScheme"
+        [xAxis]="true"
+        [yAxis]="true"
+        [legend]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        xAxisLabel="Mes"
+        yAxisLabel="Quetzales (Q)"
+        [autoScale]="true">
+      </ngx-charts-line-chart>
+
+      <p *ngIf="!cargando() && !huboError() && datosGrafica().length <= 1"
+         style="color: #888; font-size: 14px; padding: 10px;">
+        Necesitas movimientos de al menos 2 meses distintos para ver la tendencia.
+      </p>
+    </div>
+  </div>
+</div>
