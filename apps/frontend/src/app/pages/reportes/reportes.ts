@@ -1,11 +1,16 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { NgxChartsModule, Color, ScaleType } from '@swimlane/ngx-charts';
+import { RouterLink } from '@angular/router';
 import { GastoService, Gasto } from '../../services/gasto.service';
 import { IngresoService, Ingreso } from '../../services/ingreso.service';
 
 interface MovimientoMensual {
+  name: string;
+  series: { name: string; value: number }[];
+}
+
+interface SerieLinea {
   name: string;
   series: { name: string; value: number }[];
 }
@@ -17,7 +22,6 @@ interface MovimientoMensual {
   templateUrl: './reportes.html',
   styleUrl: './reportes.css'
 })
-
 export class Reportes implements OnInit {
 
   private gastoService = inject(GastoService);
@@ -26,10 +30,33 @@ export class Reportes implements OnInit {
   private readonly meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
                              'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
-  // Antes eran propiedades normales; ahora son signals
   datosGrafica = signal<MovimientoMensual[]>([]);
   cargando = signal(true);
   huboError = signal(false);
+
+  // NUEVO: listas completas para mostrar al lado de la gráfica
+  listaIngresos = signal<Ingreso[]>([]);
+  listaGastos = signal<Gasto[]>([]);
+
+  datosTendencia = computed<SerieLinea[]>(() => {
+    const datos = this.datosGrafica();
+
+    const ingresos: { name: string; value: number }[] = [];
+    const gastos: { name: string; value: number }[] = [];
+
+    datos.forEach(mes => {
+      const serieIngreso = mes.series.find(s => s.name === 'Ingresos');
+      const serieGasto = mes.series.find(s => s.name === 'Gastos');
+
+      ingresos.push({ name: mes.name, value: serieIngreso?.value ?? 0 });
+      gastos.push({ name: mes.name, value: serieGasto?.value ?? 0 });
+    });
+
+    return [
+      { name: 'Ingresos', series: ingresos },
+      { name: 'Gastos', series: gastos }
+    ];
+  });
 
   colorScheme: Color = {
     name: 'finora',
@@ -38,7 +65,7 @@ export class Reportes implements OnInit {
     domain: ['#4ade80', '#f87171']
   };
 
-  view: [number, number] = [700, 350];
+  view: [number, number] = [500, 350];
 
   ngOnInit(): void {
     this.ingresoService.listar().subscribe({
@@ -46,6 +73,15 @@ export class Reportes implements OnInit {
         this.gastoService.listar().subscribe({
           next: (gastos) => {
             this.datosGrafica.set(this.agruparPorMes(ingresos, gastos));
+
+            // NUEVO: guardamos las listas ordenadas de más reciente a más antiguo
+            this.listaIngresos.set(
+              [...ingresos].sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())
+            );
+            this.listaGastos.set(
+              [...gastos].sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())
+            );
+
             this.cargando.set(false);
           },
           error: () => this.manejarError()
