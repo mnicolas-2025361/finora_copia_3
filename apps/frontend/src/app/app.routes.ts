@@ -5,6 +5,7 @@ import { Register } from './pages/register/register';
 import { HomeComponent } from './pages/home/home';
 import { IngresosComponent } from './pages/ingresos/ingresos';
 import { GastosComponent } from './pages/gastos/gastos';
+import { Reportes } from './pages/reportes/reportes';
 
 import { authGuard } from './guards/auth.guard';
 
@@ -41,6 +42,12 @@ export const routes: Routes = [
   {
     path: 'gastos',
     component: GastosComponent,
+    canActivate: [authGuard]
+  },
+
+  {
+    path: 'reportes',
+    component: Reportes,
     canActivate: [authGuard]
   }
 

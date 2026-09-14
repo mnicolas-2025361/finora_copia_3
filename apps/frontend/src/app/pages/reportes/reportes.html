@@ -1,1 +1,47 @@
-<p>reportes works!</p>
+<div class="home">
+  <div class="contenido">
+    <h1 class="saludo">
+      <span class="texto-blanco">REPORTE DE</span>
+      <br>
+      <span class="texto-verde">INGRESOS VS GASTOS</span>
+    </h1>
+
+    <div class="botones" style="margin-bottom: 20px;">
+      <button class="boton-accion" routerLink="/home">
+        ← Regresar al Dashboard
+      </button>
+    </div>
+
+    <div class="grafica-container-reporte">
+      <h2>Comparativo mensual</h2>
+
+      <p *ngIf="cargando()" style="color: #888; font-size: 14px; padding: 10px;">
+        Cargando datos...
+      </p>
+
+      <p *ngIf="huboError()" style="color: #f87171; font-size: 14px; padding: 10px;">
+        No se pudieron cargar los datos del reporte.
+      </p>
+
+      <p *ngIf="!cargando() && !huboError() && datosGrafica().length === 0"
+         style="color: #888; font-size: 14px; padding: 10px;">
+        No hay movimientos registrados todavía.
+      </p>
+
+      <ngx-charts-bar-vertical-2d
+        *ngIf="!cargando() && !huboError() && datosGrafica().length > 0"
+        [view]="view"
+        [results]="datosGrafica()"
+        [scheme]="colorScheme"
+        [xAxis]="true"
+        [yAxis]="true"
+        [legend]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        xAxisLabel="Mes"
+        yAxisLabel="Quetzales (Q)"
+        [groupPadding]="16">
+      </ngx-charts-bar-vertical-2d>
+    </div>
+  </div>
+</div>

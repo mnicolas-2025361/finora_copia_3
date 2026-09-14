@@ -7,8 +7,8 @@ import { Router } from '@angular/router';
 export class IdleService {
 
   // Tiempo máximo de inactividad:
-  // 10 minutos = 10 * 60 * 1000 milisegundos
-  private readonly idleTime = 10 * 60 * 1000;
+  // 30 minutos = 30 * 60 * 1000 milisegundos
+  private readonly idleTime = 30 * 60 * 1000; // 30 minutos
 
   private idleTimer: ReturnType<typeof setTimeout> | null = null;
 

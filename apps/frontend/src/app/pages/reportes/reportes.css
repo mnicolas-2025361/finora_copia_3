@@ -1,0 +1,132 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Century Gothic', Arial, sans-serif;
+  background: #071f16;
+}
+
+.home {
+  min-height: 100vh;
+  background-color: #071f16;
+  position: relative;
+  overflow: hidden;
+  color: white;
+}
+
+.home::before {
+  content: "";
+  position: absolute;
+  top: -10%;
+  right: -20%;
+  width: 85%;
+  height: 130%;
+  background-image:
+    linear-gradient(rgba(79, 209, 161, 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79, 209, 161, 0.10) 1px, transparent 1px);
+  background-size: 40px 40px;
+  transform: perspective(700px) rotateX(60deg) rotateZ(-14deg);
+  transform-origin: top right;
+  mask-image: linear-gradient(to left, black 20%, transparent 85%);
+  -webkit-mask-image: linear-gradient(to left, black 20%, transparent 85%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.contenido {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 35px 45px 45px;
+}
+
+.saludo {
+  margin: 0 0 28px;
+  font-size: 36px;
+  line-height: 1.12;
+  letter-spacing: -1px;
+}
+
+.texto-blanco {
+  color: #ffffff;
+}
+
+.texto-verde {
+  color: #4fd1a1;
+  font-weight: bold;
+}
+
+.botones {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  justify-content: flex-start;
+}
+
+.boton-accion {
+  background-color: #1a4233;
+  color: #b8cbc3;
+  border: 1px solid #285e4a;
+  padding: 11px 20px;
+  border-radius: 5px;
+  font-family: 'Century Gothic', Arial, sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.2s ease,
+    border-color 0.25s ease;
+}
+
+.boton-accion:hover {
+  background-color: #285e4a;
+  border-color: #4fd1a1;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.boton-accion:active {
+  transform: translateY(0);
+}
+
+.grafica-container-reporte {
+  background: rgba(12, 45, 34, 0.92);
+  border: 1px solid rgba(79, 209, 161, 0.12);
+  border-radius: 6px;
+  padding: 24px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.grafica-container-reporte h2 {
+  color: #ffffff;
+  font-size: 17px;
+  margin: 0 0 15px;
+  font-weight: 500;
+}
+
+::ng-deep .grafica-container-reporte .ngx-charts .tick text {
+  fill: #a2b5ad !important;
+}
+
+::ng-deep .grafica-container-reporte text {
+  fill: #d1dfd8;
+}
+
+::ng-deep .grafica-container-reporte .legend-labels {
+  background: transparent !important;
+}
+
+@media (max-width: 900px) {
+  .contenido {
+    padding: 30px 25px;
+  }
+
+  .saludo {
+    font-size: 30px;
+  }
+}

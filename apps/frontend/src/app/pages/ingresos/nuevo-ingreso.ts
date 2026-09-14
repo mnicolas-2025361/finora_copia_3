@@ -47,17 +47,13 @@ template: ` <div class="modal-overlay">
         />
       </div>
 
-      <div class="campo">
-        <label for="fecha">Fecha</label>
+        <div class="campo">
+          <label>Fecha</label>
 
-        <input
-          id="fecha"
-          name="fecha"
-          type="date"
-          [(ngModel)]="fecha"
-          class="input-finora"
-        />
-      </div>
+          <div class="input-finora fecha-fija">
+            {{ fecha | date:'dd/MM/yyyy' }}
+          </div>
+        </div>
 
       <div class="campo">
         <label for="categoria">Categoría</label>
@@ -146,6 +142,14 @@ styles: [`
 
 .campo {
   margin-bottom: 16px;
+}
+
+.fecha-fija {
+  display: flex;
+  align-items: center;
+  color: #a2b5ad;
+  cursor: not-allowed;
+  user-select: none;
 }
 
 .campo label {

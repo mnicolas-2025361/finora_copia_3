@@ -48,15 +48,11 @@ import { GastoService, Gasto } from '../../services/gasto.service.js';
       </div>
 
       <div class="campo">
-        <label for="fecha">Fecha</label>
+        <label>Fecha</label>
 
-        <input
-          id="fecha"
-          name="fecha"
-          type="date"
-          [(ngModel)]="fecha"
-          class="input-finora"
-        />
+        <div class="input-finora fecha-fija">
+          {{ fecha | date:'dd/MM/yyyy' }}
+        </div>
       </div>
 
       <div class="campo">
@@ -140,6 +136,14 @@ import { GastoService, Gasto } from '../../services/gasto.service.js';
   margin: 8px 0 22px;
   color: #8fa39a;
   font-size: 14px;
+}
+
+.fecha-fija {
+  display: flex;
+  align-items: center;
+  color: #a2b5ad;
+  cursor: not-allowed;
+  user-select: none;
 }
 
 .campo {

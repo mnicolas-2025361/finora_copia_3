@@ -2,11 +2,8 @@ import { Injectable, NgZone, signal } from '@angular/core';
 
 import { AuthService } from './auth.service';
 
-// Tiempo de inactividad antes de mostrar el aviso
-const INACTIVITY_TIMEOUT = 10 * 1000; // 10 segundos
-
-// Tiempo de gracia con cuenta regresiva antes de cerrar sesión
-const GRACE_TIMEOUT = 10 * 1000; // 10 segundos
+const INACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 minutos
+const GRACE_TIMEOUT = 60 * 1000; // 1 minuto de gracia antes de cerrar sesión
 
 // Eventos que cuentan como actividad del usuario
 const ACTIVITY_EVENTS: (keyof DocumentEventMap)[] = [
