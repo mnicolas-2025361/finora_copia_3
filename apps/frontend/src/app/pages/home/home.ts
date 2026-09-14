@@ -134,7 +134,7 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/gastos']);
   }
 
-  irANuevoReporte(): void {
-    console.log('Módulo de Reportes: pendiente de implementar');
-  }
+irANuevoReporte(): void {
+  this.router.navigate(['/reportes']);
+}
 }
