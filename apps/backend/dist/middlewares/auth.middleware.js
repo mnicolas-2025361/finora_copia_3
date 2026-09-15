@@ -24,8 +24,16 @@ export function authenticateToken(req, res, next) {
         next();
     }
     catch (error) {
+        if (error instanceof jwt.TokenExpiredError) {
+            res.status(401).json({
+                message: "Sesión expirada",
+                code: "TOKEN_EXPIRED"
+            });
+            return;
+        }
         res.status(401).json({
-            message: "Sesión expirada o token inválido"
+            message: "Token inválido",
+            code: "TOKEN_INVALID"
         });
     }
 }

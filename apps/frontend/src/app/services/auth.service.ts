@@ -53,24 +53,46 @@ export class AuthService {
     ).pipe(
 
       tap((response) => {
-
-        localStorage.setItem(
-          'token',
-          response.token
-        );
-
-        localStorage.setItem(
-          'user',
-          JSON.stringify(response.user)
-        );
-
-        this.startExpirationTimer(response.token);
-
-        // Notifica a toda la app que ahora hay sesión activa
-        this.isAuthenticatedSubject.next(true);
+        this.guardarSesion(response);
       })
 
     );
+  }
+
+  /** Login con el ID token que entrega Google Identity Services */
+  loginWithGoogle(idToken: string): Observable<LoginResponse> {
+
+    return this.http.post<LoginResponse>(
+      `${this.apiUrl}/google`,
+      {
+        idToken
+      }
+    ).pipe(
+
+      tap((response) => {
+        this.guardarSesion(response);
+      })
+
+    );
+  }
+
+  /** Lógica compartida entre login() y loginWithGoogle() */
+  private guardarSesion(response: LoginResponse): void {
+
+    localStorage.setItem(
+      'token',
+      response.token
+    );
+
+    localStorage.setItem(
+      'user',
+      JSON.stringify(response.user)
+    );
+
+    this.startExpirationTimer(response.token);
+
+    // Notifica a toda la app que ahora hay sesión activa
+    this.isAuthenticatedSubject.next(true);
   }
 
   /** true si hay un token guardado y todavía no expiró */

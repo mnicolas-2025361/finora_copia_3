@@ -18,4 +18,13 @@ export declare function loginUser(data: LoginData): Promise<{
         role: UserRole;
     };
 }>;
+export declare function loginWithGoogle(idToken: string): Promise<{
+    token: string;
+    user: {
+        id: any;
+        name: any;
+        email: any;
+        role: UserRole;
+    };
+}>;
 //# sourceMappingURL=auth.service.d.ts.map
