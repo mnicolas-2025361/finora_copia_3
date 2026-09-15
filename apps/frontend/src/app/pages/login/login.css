@@ -14,73 +14,48 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* =========================
-   PÁGINA PRINCIPAL
-========================= */
-
 .login-page {
   position: relative;
   min-height: 100vh;
   width: 100%;
-
   overflow-x: hidden;
-
   background: #07110f;
-
   color: #17221f;
 }
 
-/* =========================
-   FONDO
-========================= */
-
 .orb {
   position: absolute;
-
   border-radius: 50%;
-
   filter: blur(2px);
-
   pointer-events: none;
 }
 
 .orb-one {
   width: 500px;
   height: 500px;
-
   top: -250px;
   left: -150px;
-
   background: #0c3d31;
-
   opacity: 0.8;
 }
 
 .orb-two {
   width: 450px;
   height: 450px;
-
   right: -180px;
   bottom: -220px;
-
   background: #30215c;
-
   opacity: 0.7;
 }
 
 .grid {
   position: absolute;
-
   inset: 0;
-
   opacity: 0.07;
-
   background-image:
     linear-gradient(#ffffff 1px, transparent 1px),
     linear-gradient(90deg, #ffffff 1px, transparent 1px);
-
   background-size: 45px 45px;
-
   mask-image: linear-gradient(
     to bottom,
     transparent,
@@ -90,55 +65,29 @@ body {
   );
 }
 
-/* =========================
-   CONTENEDOR PRINCIPAL
-========================= */
-
 .login-layout {
   position: relative;
   z-index: 2;
-
   width: min(1180px, calc(100% - 50px));
-
   min-height: 720px;
-
   margin: 40px auto;
-
   display: grid;
-
-  /* IZQUIERDA = VISUAL
-     DERECHA = LOGIN */
   grid-template-columns: 1.1fr 0.9fr;
-
   overflow: hidden;
-
   border: 1px solid rgba(255, 255, 255, 0.09);
-
   border-radius: 32px;
-
   background: #ffffff;
-
   box-shadow:
     0 40px 100px rgba(0, 0, 0, 0.45);
 }
 
-/* =========================
-   SECCIÓN IZQUIERDA
-========================= */
-
 .visual-section {
   position: relative;
-
   overflow: hidden;
-
   padding: 55px;
-
   display: flex;
-
   flex-direction: column;
-
   justify-content: space-between;
-
   background:
     radial-gradient(
       circle at 75% 25%,
@@ -151,26 +100,16 @@ body {
       #102e26 55%,
       #0a1714
     );
-
   color: white;
 }
-
-/* =========================
-   LOGO
-========================= */
 
 .logo,
 .mobile-logo {
   display: flex;
-
   align-items: center;
-
   gap: 12px;
-
   font-size: 30px;
-
   font-weight: 80;
-
   letter-spacing: -1px;
 }
 
@@ -178,9 +117,7 @@ body {
 .mobile-logo img {
   width: 46px;
   height: 46px;
-
   object-fit: contain;
-
   display: block;
 }
 
@@ -189,38 +126,25 @@ body {
   color: white;
 }
 
-/* =========================
-   CONTENIDO VISUAL
-========================= */
-
 .visual-content {
   max-width: 550px;
-
   margin-top: auto;
   margin-bottom: auto;
 }
 
 .small-title {
   display: inline-block;
-
   margin-bottom: 20px;
-
   color: #43e09d;
-
   font-size: 11px;
-
   font-weight: 800;
-
   letter-spacing: 3px;
 }
 
 .visual-content h1 {
   margin: 0;
-
   font-size: clamp(48px, 5vw, 72px);
-
   line-height: 0.98;
-
   letter-spacing: -4px;
 }
 
@@ -230,33 +154,19 @@ body {
 
 .visual-content p {
   max-width: 450px;
-
   margin-top: 25px;
-
   color: #a5b8b2;
-
   font-size: 16px;
-
   line-height: 1.7;
 }
 
-/* =========================
-   TARJETA FINANCIERA
-========================= */
-
 .floating-card {
   width: 320px;
-
   padding: 23px;
-
   border-radius: 20px;
-
   border: 1px solid rgba(255, 255, 255, 0.1);
-
   background: rgba(255, 255, 255, 0.07);
-
   backdrop-filter: blur(15px);
-
   box-shadow:
     0 20px 50px rgba(0, 0, 0, 0.2);
 }
@@ -264,221 +174,141 @@ body {
 .card-top,
 .card-bottom {
   display: flex;
-
   justify-content: space-between;
-
   align-items: center;
 }
 
 .card-top span:first-child {
   color: #9db0aa;
-
   font-size: 12px;
 }
 
 .dots {
   color: #71827d;
-
   letter-spacing: 3px;
 }
 
 .floating-card strong {
   display: block;
-
   margin: 12px 0 18px;
-
   font-size: 29px;
 }
 
 .progress {
   height: 7px;
-
   overflow: hidden;
-
   border-radius: 10px;
-
   background: rgba(255, 255, 255, 0.1);
 }
 
 .progress-value {
   width: 72%;
-
   height: 100%;
-
   border-radius: inherit;
-
   background: #43e09d;
 }
 
 .card-bottom {
   margin-top: 10px;
-
   color: #879a94;
-
   font-size: 11px;
 }
 
-/* =========================
-   MINI ESTADÍSTICAS
-========================= */
-
 .mini-stats {
   position: absolute;
-
   right: 45px;
   bottom: 55px;
-
   display: flex;
-
   gap: 10px;
 }
 
 .stat {
   display: flex;
-
   align-items: center;
-
   gap: 10px;
-
   padding: 11px 13px;
-
   border-radius: 13px;
-
   background: rgba(255, 255, 255, 0.06);
-
   border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .stat-icon {
   width: 30px;
   height: 30px;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   border-radius: 9px;
-
   font-weight: 800;
 }
 
 .green {
   background: rgba(67, 224, 157, 0.13);
-
   color: #43e09d;
 }
 
 .purple {
   background: rgba(160, 120, 255, 0.13);
-
   color: #a879ff;
 }
 
 .stat small {
   display: block;
-
   color: #7e918b;
-
   font-size: 9px;
 }
 
 .stat strong {
   display: block;
-
   margin-top: 2px;
-
   color: white;
-
   font-size: 12px;
 }
 
-/* =========================
-   LOGIN - DERECHA
-========================= */
-
 .login-section {
   display: flex;
-
   align-items: center;
-
   justify-content: flex-start;
-
   padding: 55px;
-
   background: #f8faf9;
 }
 
-/* =========================
-   CAJA DEL LOGIN
-========================= */
-
 .login-box {
   width: 100%;
-
   max-width: 390px;
-
   margin: 0 auto;
 }
 
-/* =========================
-   BIENVENIDA
-========================= */
-
 .welcome {
   display: flex;
-
   align-items: center;
-
   gap: 9px;
-
   margin-bottom: 13px;
-
   color: #37a87c;
-
   font-size: 10px;
-
   font-weight: 800;
-
   letter-spacing: 2px;
 }
 
 .welcome-line {
   width: 22px;
-
   height: 2px;
-
   background: #37a87c;
 }
 
-/* =========================
-   TÍTULO
-========================= */
-
 .login-box h2 {
   margin: 0;
-
   font-size: 39px;
-
   letter-spacing: -2px;
-
   color: #14201d;
 }
 
 .description {
   margin: 12px 0 34px;
-
   color: #7d8985;
-
   font-size: 14px;
-
   line-height: 1.6;
 }
-
-/* =========================
-   CAMPOS
-========================= */
 
 .field {
   margin-bottom: 20px;
@@ -486,68 +316,45 @@ body {
 
 .field label {
   display: block;
-
   margin-bottom: 8px;
-
   color: #26332f;
-
   font-size: 13px;
-
   font-weight: 700;
 }
 
 .input-box {
   display: flex;
-
   align-items: center;
-
   width: 100%;
-
   border: 1px solid #dce4e0;
-
   border-radius: 13px;
-
   background: white;
-
   transition: 0.25s;
-
   overflow: hidden;
 }
 
 .input-box:focus-within {
   border-color: #37b989;
-
   box-shadow:
     0 0 0 4px rgba(55, 185, 137, 0.09);
 }
 
 .input-icon {
   width: 48px;
-
   display: flex;
-
   justify-content: center;
-
   align-items: center;
-
   color: #7d8985;
-
   font-size: 14px;
 }
 
 .input-box input {
   width: 100%;
-
   padding: 15px 14px 15px 0;
-
   border: none;
-
   outline: none;
-
   color: #17221f;
-
   background: transparent;
-
   font-size: 14px;
 }
 
@@ -555,99 +362,58 @@ body {
   color: #aeb8b4;
 }
 
-/* =========================
-   ERROR
-========================= */
-
 .error-message {
   display: flex;
-
   align-items: center;
-
   gap: 9px;
-
   margin-bottom: 17px;
-
   padding: 11px 13px;
-
   border-radius: 10px;
-
   background: #fff0f0;
-
   color: #c33c3c;
-
   font-size: 13px;
 }
 
 .error-message span {
   width: 20px;
   height: 20px;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   flex-shrink: 0;
-
   border-radius: 50%;
-
   background: #c33c3c;
-
   color: white;
-
   font-size: 11px;
-
   font-weight: bold;
 }
 
-/* =========================
-   BOTÓN
-========================= */
-
 .login-button {
   width: 100%;
-
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
   padding: 16px 18px;
-
   border: none;
-
   border-radius: 13px;
-
   background: #14201d;
-
   color: white;
-
   font-size: 14px;
-
   font-weight: 700;
-
   cursor: pointer;
-
   transition: 0.25s;
 }
 
 .login-button:hover {
   background: #37b989;
-
   color: #07110f;
-
   transform: translateY(-2px);
-
   box-shadow:
     0 10px 25px rgba(55, 185, 137, 0.2);
 }
 
 .button-arrow {
   font-size: 21px;
-
   transition: 0.25s;
 }
 
@@ -655,64 +421,48 @@ body {
   transform: translateX(4px);
 }
 
-/* =========================
-   REGISTRO
-========================= */
-
 .divider {
   position: relative;
-
   margin: 28px 0;
-
   text-align: center;
-
   color: #b0bab7;
-
   font-size: 12px;
 }
 
 .divider::before {
   content: "";
-
   position: absolute;
-
   top: 50%;
-
   left: 0;
   right: 0;
-
   height: 1px;
-
   background: #e3e8e6;
 }
 
 .divider span {
   position: relative;
-
   padding: 0 12px;
-
   background: #f8faf9;
+}
+
+.google-btn-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
 }
 
 .register-text {
   text-align: center;
-
   color: #7d8985;
-
   font-size: 13px;
 }
 
 .register-text button {
   margin-left: 4px;
-
   border: none;
-
   background: none;
-
   color: #159266;
-
   font-weight: 800;
-
   cursor: pointer;
 }
 
@@ -720,112 +470,67 @@ body {
   text-decoration: underline;
 }
 
-/* =========================
-   SEGURIDAD
-========================= */
-
 .security {
   margin-top: 27px;
-
   text-align: center;
-
   color: #a0aaa7;
-
   font-size: 11px;
 }
 
 .security span {
   margin-right: 5px;
-
   color: #37b989;
-
   font-weight: bold;
 }
-
-/* =========================
-   LOGO MÓVIL
-========================= */
 
 .mobile-logo {
   display: none;
 }
 
-/* =========================
-   SESIÓN EXPIRADA
-========================= */
-
 .session-expired {
   display: flex;
-
   align-items: flex-start;
-
   gap: 12px;
-
   padding: 14px 16px;
-
   margin-bottom: 20px;
-
   border: 1px solid rgba(220, 53, 69, 0.3);
-
   border-radius: 12px;
-
   background: rgba(220, 53, 69, 0.08);
 }
 
 .session-icon {
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   width: 24px;
   height: 24px;
-
   flex-shrink: 0;
-
   border-radius: 50%;
-
   background: #dc3545;
-
   color: white;
-
   font-weight: 700;
-
   font-size: 14px;
 }
 
 .session-expired strong {
   display: block;
-
   margin-bottom: 3px;
-
   color: #dc3545;
-
   font-size: 14px;
 }
 
 .session-expired p {
   margin: 0;
-
   color: #666;
-
   font-size: 13px;
 }
-
-/* =========================
-   TABLET
-========================= */
 
 @media (max-width: 900px) {
 
   .login-layout {
     grid-template-columns: 1fr;
-
     min-height: auto;
-
     margin: 25px auto;
-
     border-radius: 25px;
   }
 
@@ -835,17 +540,13 @@ body {
 
   .login-section {
     min-height: 650px;
-
     padding: 50px 40px;
-
     justify-content: center;
   }
 
   .mobile-logo {
     display: flex;
-
     margin-bottom: 40px;
-
     color: #14201d;
   }
 
@@ -863,10 +564,6 @@ body {
   }
 }
 
-/* =========================
-   CELULAR
-========================= */
-
 @media (max-width: 500px) {
 
   .login-page {
@@ -875,17 +572,13 @@ body {
 
   .login-layout {
     width: calc(100% - 25px);
-
     margin: 15px auto;
-
     border-radius: 22px;
   }
 
   .login-section {
     min-height: calc(100vh - 30px);
-
     padding: 35px 25px;
-
     justify-content: center;
   }
 
@@ -904,7 +597,6 @@ body {
 
   .login-box h2 {
     font-size: 32px;
-
     letter-spacing: -1.5px;
   }
 
@@ -920,10 +612,6 @@ body {
     padding: 15px 16px;
   }
 }
-
-/* =========================
-   CELULAR PEQUEÑO
-========================= */
 
 @media (max-width: 360px) {
 

@@ -1,4 +1,4 @@
-import { loginUser, registerUser, } from "../services/auth.service.js";
+import { loginUser, registerUser, loginWithGoogle, } from "../services/auth.service.js";
 export async function register(req, res) {
     try {
         const { name, email, password } = req.body;
@@ -23,6 +23,27 @@ export async function register(req, res) {
             ? error.message
             : "Error al registrar el usuario";
         res.status(400).json({
+            message,
+        });
+    }
+}
+export async function googleLogin(req, res) {
+    try {
+        const { idToken } = req.body;
+        if (!idToken) {
+            res.status(400).json({
+                message: "Falta el token de Google",
+            });
+            return;
+        }
+        const result = await loginWithGoogle(idToken);
+        res.status(200).json(result);
+    }
+    catch (error) {
+        const message = error instanceof Error
+            ? error.message
+            : "Error al iniciar sesión con Google";
+        res.status(401).json({
             message,
         });
     }
